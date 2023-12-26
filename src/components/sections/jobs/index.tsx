@@ -158,10 +158,15 @@ const StyledTabPanel = styled.div`
   }
 
   .range {
-    margin-bottom: 25px;
-    color: var(--light-slate);
+    color: var(--green);
     font-family: var(--font-mono);
     font-size: var(--fz-xs);
+  }
+  .skills {
+    margin-bottom: 15px;
+    color: var(--light-slate);
+    font-family: var(--font-mono);
+    font-size: var(--fz-xxs);
   }
 `;
 interface NodeFrontmatter {
@@ -169,6 +174,7 @@ interface NodeFrontmatter {
   company: string;
   location: string;
   range: string;
+  skills: string;
   url: string;
 } 
 
@@ -194,6 +200,7 @@ const Jobs = () => {
               company
               location
               range
+              skills
               url
             }
             html
@@ -283,7 +290,7 @@ const Jobs = () => {
           {jobsData &&
             jobsData.map(({ node }, i: any) => {
               const { frontmatter, html } = node;
-              const { title, url, company, range } = frontmatter;
+              const { title, url, company, range, skills } = frontmatter;
               return (
                 <CSSTransition key={i} in={activeTabId === i} timeout={250} classNames="fade">
                   <StyledTabPanel
@@ -303,6 +310,7 @@ const Jobs = () => {
                         </span>
                       </h3>
                       <p className='range'>{range}</p>
+                      <p className='skills'>Most Used Skills: {skills}</p>
                       <div dangerouslySetInnerHTML={{__html: html}} />
                   </StyledTabPanel>
                 </CSSTransition>
