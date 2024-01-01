@@ -78,13 +78,17 @@ const StyledProject = styled.li`
 
   .project-top {
     ${({ theme }) => theme.mixins.flexBetween};
-    margin-bottom: 35px;
+    margin-bottom: 15px;
 
     .folder {
       color: var(--green);
       svg {
         width: 40px;
         height: 40px;
+      }
+      .role {
+        margin: 15px 0 0;
+        font-size: 17px;
       }
     }
 
@@ -170,6 +174,8 @@ interface Frontmatter {
   tech: string[];
   github: string;
   external: string;
+  company: string;
+  role: string;
 }
 
 interface ProjectNode {
@@ -199,6 +205,8 @@ const Projects = () => {
               tech
               github
               external
+              company
+              role
             }
             html
           }
@@ -235,7 +243,7 @@ const Projects = () => {
 
   const projectInner = (projectContent: ProjectNode) => {
     const { frontmatter, html } = projectContent;
-    const { github, external, title, tech } = frontmatter;
+    const { github, external, title, tech, role, company } = frontmatter;
 
     return (
       <div className="project-inner">
@@ -243,6 +251,16 @@ const Projects = () => {
           <div className="project-top">
             <div className="folder">
               <Icon name="Folder" />
+              <div className="role">
+
+              {
+                role && (
+                  <a >
+                    {role} &nbsp;@&nbsp; {company}
+                  </a>
+                )
+              }
+              </div>
             </div>
             <div className="project-links">
               {github && (
@@ -273,6 +291,7 @@ const Projects = () => {
         </header>
 
         <footer>
+          
           {tech && (
             <ul className="project-tech-list">
               {tech.map((tech, i) => (
@@ -323,7 +342,6 @@ const Projects = () => {
           </TransitionGroup>
         )}
       </ul>
-
       <button className="more-button" onClick={() => setShowMore(!showMore)}>
         Show {showMore ? 'Less' : 'More'}
       </button>

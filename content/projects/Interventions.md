@@ -7,8 +7,9 @@ tech:
   - Jekyll
   - SCSS
   - JS
-company: 'Scout'
-showInProjects: false
+company: 'SPD TECH'
+role: 'Frontend Developer'
+showInProjects: true
 ---
 
 Interactive marketing website for Northeastern's first annual student-led design conference, Interventions.
