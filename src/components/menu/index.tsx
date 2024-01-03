@@ -228,22 +228,27 @@ const Menu = (props: any) => {
   }
 
   const onResize = () => {
-    const width = window.innerWidth;
-
-    if (width > 768) {
-      setMenuOpen(false);
+    if (typeof window !== 'undefined') {
+      const width = window.innerWidth;
+      if (width > 768) {
+        setMenuOpen(false);
+      }
     }
   }
 
   useEffect(() => {
     document.addEventListener('keydown', onKeyDown);
-    window.addEventListener('resize', onResize);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', onResize);
+    }
 
     setFocusables();
 
     return () => {
       document.removeEventListener('keydown', onKeyDown);
-      window.removeEventListener('resize', onResize);
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('resize', onResize);
+      }
     }
   }, []);
 

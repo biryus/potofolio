@@ -16,7 +16,7 @@ const config: GatsbyConfig = {
     description: `LingZhi Jin is a software engineer who specializes in building (and ocassionally designing) websites`,
     siteUrl: `https://google.com`,
     image: './og.png',
-    twitterUsername: '@zinlingzhi'
+    twitterUsername: '@biryus'
   },
   plugins: [
     `gatsby-plugin-typescript`,

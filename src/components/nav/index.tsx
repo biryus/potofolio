@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { navLinks } from '@config/index';
 import IconLogo from '@components/icons/logo';
+import IconHex from '@components/icons/hex';
 import Menu from '@components/menu';
 import useScrollDirection from '@hooks/useScrollDirection';
 import usePrefersReducedMotion from '@hooks/usePrefersReducedMotion';
@@ -39,7 +40,7 @@ const StyledHeader = styled.header<HeaderProps>`
 
   @media (prefers-reduced-motion: no-preference) {
     ${props =>
-      props.scrollDirection === 'UP' && !props.scrolledToTop && css`
+      props.scrollDirection === 'up' && !props.scrolledToTop && css`
         height: var(--nav-scroll-height);
         transform: translateY(0px);
         background-color: rgba(10, 25, 47, 0.85);
@@ -48,7 +49,7 @@ const StyledHeader = styled.header<HeaderProps>`
     }
 
     ${props =>
-      props.scrollDirection === 'DOWN' && !props.scrolledToTop && css`
+      props.scrollDirection === 'down' && !props.scrolledToTop && css`
         height: var(--nav-scroll-height);
         transform: translateY(calc(var(--nav-scroll-height) * -1));
         box-shadow: 0 10px 30px -10px var(--navy-shadow);
@@ -68,22 +69,43 @@ const StyledNav = styled.nav`
 
   .logo {
     ${({theme}) => theme.mixins.flexCenter};
+
     a {
       color: var(--green);
       width: 42px;
       height: 42px;
+      position: relative;
+      z-index: 1;
 
-      &:hover,
-      &:focus {
-        svg {
-          fill: var(--green-tint);
+      .hex-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        @media (prefers-reduced-motion: no-preference) {
+          transition: var(--transition);
         }
       }
 
-      svg {
-        fill: none;
-        transition: var(--transition);
-        user-select: none;
+      .logo-container {
+        position: relative;
+        z-index: 1;
+        svg {
+          fill: none;
+          user-select: none;
+          @media (prefers-reduced-motion: no-preference) {
+            transition: var(--transition);
+          }
+          polygon {
+            fill: var(--navy);
+          }
+        }
+      }
+      &:hover,
+      &:focus {
+        outline: 0;
+        transform: translate(-4px, -4px);
+        transform: translate(4px, 3px);
       }
     }
   }
@@ -126,52 +148,66 @@ const StyledLinks = styled.div`
     margin-left: 15px;
     font-size: var(--fz-xs);
   }
-
 `;
 
 const Nav = (props:any) => {
   const { isHome } = props;
-
   const [isMounted, setIsMounted] = useState(!isHome);
   const [scrolledToTop, setScrolledToTop] = useState(true);
   const prefersReducedMotion = usePrefersReducedMotion();
-  const scrollDirection = useScrollDirection('UP');
-  const timeout = isHome ? loaderDelay : 0;
-  const fadeClass = isHome ? 'fade' : '';
-  const fadeDownClass = isHome ? 'fadedown' : '';
-
+  const scrollDirection = useScrollDirection('down');
+ 
   const handleScroll = () => {
-    setScrolledToTop(window.pageYOffset < 50);
+    if (typeof window !== 'undefined') {
+      setScrolledToTop(window.scrollY < 50);
+    }
   }
 
   useEffect(() => {
     if(prefersReducedMotion) {
       return;
     }
-
     const timeout = setTimeout(() => {
       setIsMounted(true);
-    })
+    }, 100);
 
-    window.addEventListener('scroll', handleScroll);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', handleScroll);
+    }
 
     return () => {
       clearTimeout(timeout);
-      window.removeEventListener('scroll', handleScroll);
+      if (typeof window !== 'undefined'){
+        window.removeEventListener('scroll', handleScroll);
+      }
     }
   }, []);
+
+  const timeout = isHome ? loaderDelay : 0;
+  const fadeClass = isHome ? 'fade' : '';
+  const fadeDownClass = isHome ? 'fadedown' : '';
 
   const Logo = (
     <div className="logo" tabIndex = {-1}>
       {isHome ? (
         <a href="/" aria-label="home">
-          <IconLogo />
+          <div className='hex-container'>
+            <IconHex />
+          </div>
+          <div className='logo-container'>
+            <IconLogo />
+          </div>
         </a>
        )
        :
        (
          <Link to="/" aria-label="home">
-          <IconLogo />
+          <div className='hex-container'>
+            <IconHex />
+          </div>
+          <div className='logo-container'>
+            <IconLogo />
+          </div>
          </Link>
        )}
     </div>

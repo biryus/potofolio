@@ -16,6 +16,7 @@ import IconPlayStore from '@components/icons/playstore';
 import IconStackOverflow from '@components/icons/stackoverflow';
 import IconStar from '@components/icons/star';
 import IconTwitter from '@components/icons/appstore';
+import IconHex from '@components/icons/hex';
 
 const Icon = (props: any) => {
   const {name} = props;
@@ -51,6 +52,8 @@ const Icon = (props: any) => {
       return <IconStackOverflow />;
     case 'Twitter':
       return <IconTwitter />;
+    case 'Hex':
+      return <IconHex />;
     default:
       return <IconExternal />;
   }

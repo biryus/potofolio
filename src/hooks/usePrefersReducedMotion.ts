@@ -15,14 +15,17 @@ const getInitialState = () =>
 function usePrefersReducedMotion() {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(getInitialState);
   useEffect(() => {
-    const mediaQueryList = window.matchMedia(QUERY);
-    const listener = event => {
-      setPrefersReducedMotion(!event.matches);
-    };
-    mediaQueryList.addListener(listener);
-    return () => {
-      mediaQueryList.removeListener(listener);
-    };
+    const isBrowser = typeof window !== 'undefined';
+    if (isBrowser) {
+      const mediaQueryList = window.matchMedia(QUERY);
+      const listener = (event: { matches: any; }) => {
+        setPrefersReducedMotion(!event.matches);
+      };
+      mediaQueryList.addListener(listener);
+      return () => {
+        mediaQueryList.removeListener(listener);
+      };
+    }
   }, []);
   return prefersReducedMotion;
 }
