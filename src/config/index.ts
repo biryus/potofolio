@@ -4,23 +4,19 @@ export const email = 'bruce.jin.software@hotmail.com'
 export const socialMedia = [
   {
     name: 'Github',
-    url: 'https://www.github.com/realtimebyte'
+    url: 'https://www.github.com/biryus'
   },
   {
     name: 'Instagram',
-    url: 'https://www.instagram.com/realtimebyte/'
+    url: 'https://www.instagram.com/biryus/'
   },
   {
     name: 'Twitter',
-    url: 'https://www.twitter.com/realtimebyte'
-  },
-  {
-    name: 'Linkedin',
-    url: 'https://www.linkedin.com/in/realtimebyte'
+    url: 'https://twitter.com/Biryus1004'
   },
   {
     name: 'CodePen',
-    url: 'https://codepen.io/realtimebyte'
+    url: 'https://codepen.io/biryus'
   }
 ]
 
